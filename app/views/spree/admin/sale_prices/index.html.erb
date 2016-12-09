@@ -3,44 +3,57 @@
 <%= csrf_meta_tag %>
 
 <div id="add-line-item">
-  <fieldset>
-    <legend align="center"><%= Spree.t('add_product_sale_prices') %></legend>
-    <%= form_for [:admin, @product, Spree::SalePrice.new], remote: true do |f| %>
-      <div class="row">
-        <div class="columns three">
-          <%= label_tag t('original_price') %>
-          <%= text_field_tag '', @product.original_price.to_f, disabled: true %>
+  <h4><%= Spree.t('add_product_sale_prices') %></h4>
+  <%= form_for [:admin, @product, Spree::SalePrice.new], remote: true do |f| %>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group field">
+          <%= label_tag '', t('original_price'), class: 'control-label' %>
+          <%= text_field_tag '', @product.original_price.to_f, { class: 'form-control', disabled: true } %>
         </div>
       </div>
+    </div>
 
-      <div class="row">
-        <div class="columns three">
-          <%= f.label :value, t('sale_price_amount') %>
-          <%= f.text_field :value %>
-        </div>
-        <div class="columns three">
-          <%= f.label :currency, t('sale_price_currency') %>
-          <%= f.select :currency, options_for_select(supported_currencies_for_sale_price) %>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group field">
+          <%= f.label :value, t('sale_price_amount'), class: 'control-label' %>
+          <%= f.text_field :value, class: 'form-control' %>
         </div>
       </div>
+      <div class="col-md-4">
+        <div class="form-group field">
+          <%= f.label :currency, t('sale_price_currency'), class: 'control-label' %>
+          <%= f.select :currency, options_for_select(supported_currencies_for_sale_price), {}, { class: 'form-control' } %>
+        </div>
+      </div>
+    </div>
 
-      <div class="row">
-        <div class="columns three">
-          <%= f.label :start_at, t('sale_price_start_at') %>
-          <%= f.text_field :start_at, class: 'datepicker' %>
-        </div>
-        <div class="columns three">
-          <%= f.label :end_at, t('sale_price_end_at') %>
-          <%= f.text_field :end_at, class: 'datepicker' %>
-        </div>
-        <div class="columns three">
-          <%= f.label :submit, style: 'visibility: hidden' %>
-          <%= f.submit 'Add Sale Price' %>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group field">
+          <%= f.label :start_at, t('sale_price_start_at'), class: 'control-label' %>
+          <%= f.text_field :start_at, class: 'datepicker form-control' %>
         </div>
       </div>
-    <% end %>
-  </fieldset>
+      <div class="col-md-4">
+        <div class="form-group field">
+          <%= f.label :end_at, t('sale_price_end_at'), class: 'control-label' %>
+          <%= f.text_field :end_at, class: 'datepicker form-control' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions text-center" data-hook="buttons">
+      <button name="button" type="submit" class="btn btn-primary">
+        <span class="icon icon-plus"></span>
+        <%= Spree.t('add_sale_price') %>
+      </button>
+    </div>
+  <% end %>
 </div>
+
+<hr />
 
 <div id="product-sale-prices-table">
   <%= render partial: 'table', locals: { product: @product } %>
