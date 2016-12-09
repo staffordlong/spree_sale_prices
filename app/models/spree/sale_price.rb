@@ -51,7 +51,7 @@ module Spree
 
     # Convenience method for displaying the price of a given sale_price in the table
     def display_price
-      Spree::Money.new(value || 0, { currency: price.currency })
+      Spree::Money.new(price.sale_price || 0, { currency: price.currency })
     end
 
     protected
