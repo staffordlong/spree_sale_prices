@@ -6,10 +6,14 @@
   <h4><%= t('add_product_sale_prices') %></h4>
   <%= form_for [:admin, @product, Spree::SalePrice.new], remote: true do |f| %>
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-8">
         <div class="form-group field">
-          <%= label_tag '', t('original_price'), class: 'control-label' %>
-          <%= text_field_tag '', @product.original_price.to_f, { class: 'form-control', disabled: true } %>
+          <%= label_tag '', t('original_prices'), class: 'control-label' %>
+          <div class="form-inline">
+            <% supported_currencies_for_sale_price.each do |currency| %>
+              <%= text_field_tag '', Spree::Money.new(@product.original_price_in(currency.iso_code).amount || 0, currency: currency.iso_code), { class: 'form-control', disabled: true } %>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
