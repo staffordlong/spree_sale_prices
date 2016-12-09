@@ -29,7 +29,7 @@ describe Spree::Price do
 
   it 'can put a price on a percent-off sale' do
     price = create(:price)
-    price.put_on_sale 0.2, { calculator_type: Spree::Calculator::PercentOffSalePriceCalculator.new }
+    price.put_on_sale 0.2, { calculator_type: "Spree::Calculator::PercentOffSalePriceCalculator" }
 
     expect(price.on_sale?).to be true
     expect(price.price).to be_within(0.01).of(15.99)
