@@ -3,7 +3,7 @@
 <%= csrf_meta_tag %>
 
 <div id="add-line-item">
-  <h4><%= Spree.t('add_product_sale_prices') %></h4>
+  <h4><%= t('add_product_sale_prices') %></h4>
   <%= form_for [:admin, @product, Spree::SalePrice.new], remote: true do |f| %>
     <div class="row">
       <div class="col-md-4">
@@ -47,7 +47,7 @@
     <div class="form-actions text-center" data-hook="buttons">
       <button name="button" type="submit" class="btn btn-primary">
         <span class="icon icon-plus"></span>
-        <%= Spree.t('add_sale_price') %>
+        <%= t('add_sale_price') %>
       </button>
     </div>
   <% end %>
