@@ -2,7 +2,7 @@
 <%= render partial: 'spree/admin/shared/product_tabs', locals: { current: 'Product Sale Prices' } %>
 <%= csrf_meta_tag %>
 
-<div id="add-line-item">
+<div id="add-line-item" class="well">
   <h4><%= t('add_product_sale_prices') %></h4>
   <%= form_for [:admin, @product, Spree::SalePrice.new], remote: true do |f| %>
     <div class="row">
