@@ -12,3 +12,4 @@ en:
   sale_price_start_at: "Sale Start Date"
   sale_price_end_at: "Sale End Date"
   sale_price_enabled: "Enabled"
+  no_sale_prices_for_product: "There are no Sale Prices for this product"

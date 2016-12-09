@@ -18,6 +18,14 @@
     </tr>
   </thead>
   <tbody>
-    <%= render partial: 'sale_price', collection: product.master.sale_prices, locals: { product: product } %>
+    <% if (master_sale_prices = product.master.sale_prices).any? %>
+      <%= render partial: 'sale_price', collection: master_sale_prices, locals: { product: product } %>
+    <% else %>
+      <tr>
+        <td colspan="100%" class="text-center">
+          <em><%= t('no_sale_prices_for_product') %></em>
+        </td>
+      </tr>
+    <% end %>
   </tbody>
 </table>
