@@ -1,37 +1,37 @@
 Spree::Price.class_eval do
   has_many :sale_prices
-  
+
   def put_on_sale(value, params = {})
     new_sale(value, params).save
   end
 
   def new_sale(value, params = {})
     sale_price_params = {
-        value: value,
-        start_at: params.fetch(:start_at, Time.now),
-        end_at: params.fetch(:end_at, nil),
-        enabled: params.fetch(:enabled, true),
-        calculator: params.fetch(:calculator_type, "Spree::Calculator::FixedAmountSalePriceCalculator").constantize.new
+      value: value,
+      start_at: params.fetch(:start_at, Time.now),
+      end_at: params.fetch(:end_at, nil),
+      enabled: params.fetch(:enabled, true),
+      calculator: params.fetch(:calculator_type, 'Spree::Calculator::FixedAmountSalePriceCalculator').constantize.new
     }
-    return sale_prices.new(sale_price_params)
+    sale_prices.new(sale_price_params)
   end
-  
-  # TODO make update_sale method
+
+  # TODO: make update_sale method
 
   def active_sale
     first_sale(sale_prices.active) if on_sale?
   end
-  alias :current_sale :active_sale
+  alias_method :current_sale, :active_sale
 
   def next_active_sale
     first_sale(sale_prices) if sale_prices.present?
   end
-  alias :next_current_sale :next_active_sale
+  alias_method :next_current_sale, :next_active_sale
 
   def sale_price
     active_sale.calculated_price if on_sale?
   end
-  
+
   def sale_price=(value)
     if on_sale?
       active_sale.update_attribute(:value, value)
@@ -53,11 +53,11 @@ Spree::Price.class_eval do
   def original_price
     self[:amount]
   end
-  
+
   def original_price=(value)
     self[:amount] = Spree::LocalizedNumber.parse(value)
   end
-  
+
   def price
     on_sale? ? sale_price : original_price
   end
@@ -69,7 +69,7 @@ Spree::Price.class_eval do
       self[:amount] = Spree::LocalizedNumber.parse(price)
     end
   end
-  
+
   def amount
     price
   end
@@ -89,9 +89,10 @@ Spree::Price.class_eval do
   def stop_sale
     active_sale.stop if active_sale.present?
   end
-  
+
   private
-    def first_sale(scope)
-      scope.order("created_at DESC").first
-    end
+
+  def first_sale(scope)
+    scope.order('created_at DESC').first
+  end
 end

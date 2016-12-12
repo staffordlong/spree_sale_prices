@@ -1,7 +1,6 @@
 module Spree
   module Admin
     class SalePricesController < BaseController
-
       before_filter :load_product
 
       respond_to :js, :html
@@ -30,12 +29,12 @@ module Spree
 
       def sale_price_params
         params.require(:sale_price).permit(
-            :id,
-            :value,
-            :currency,
-            :start_at,
-            :end_at,
-            :enabled
+          :id,
+          :value,
+          :currency,
+          :start_at,
+          :end_at,
+          :enabled
         )
       end
     end

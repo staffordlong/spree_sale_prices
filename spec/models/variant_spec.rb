@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Spree::Variant do
-
   it 'can put a variant on a standard sale' do
     variant = create(:variant)
     expect(variant.on_sale?).to be false
@@ -27,7 +26,7 @@ describe Spree::Variant do
     variant = create(:multi_price_variant, prices_count: 5)
 
     variant.prices.each do |p|
-      variant.put_on_sale 10.95, { currencies: [ p.currency ] }
+      variant.put_on_sale 10.95, currencies: [p.currency]
 
       expect(variant.price_in(p.currency).price).to eq BigDecimal.new(10.95, 4)
       expect(variant.original_price_in(p.currency).price).to eql BigDecimal.new(19.99, 4)
@@ -38,11 +37,10 @@ describe Spree::Variant do
     variant = create(:multi_price_variant, prices_count: 5)
     some_prices = variant.prices.sample(3)
 
-    variant.put_on_sale(10.95, {
-      currencies: some_prices.map(&:currency)
-      # TODO: does not work yet, because sale_prices take the calculator instance away from each other
-      #calculator_type: Spree::Calculator::PercentOffSalePriceCalculator.new
-    })
+    variant.put_on_sale(10.95,
+                        currencies: some_prices.map(&:currency))
+    # TODO: does not work yet, because sale_prices take the calculator instance away from each other
+    # calculator_type: Spree::Calculator::PercentOffSalePriceCalculator.new
 
     some_prices.each do |p|
       expect(variant.price_in(p.currency).price).to be_within(0.01).of(10.95)
@@ -81,7 +79,6 @@ describe Spree::Variant do
   end
 
   context 'with a valid sale' do
-
     before(:each) do
       @variant = create(:multi_price_variant, prices_count: 5)
       @variant.put_on_sale(10.95) # sale is started and enabled at this point for all currencies
@@ -144,7 +141,5 @@ describe Spree::Variant do
         expect(@variant.on_sale_in?(p.currency)).to be true
       end
     end
-
   end
-
 end

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Spree::SalePrice do
-
   it 'can start and end never' do
     sale_price = build(:sale_price)
     sale_price.start
@@ -34,5 +33,4 @@ describe Spree::SalePrice do
     expect(money.money.currency).to eq(sale_price.currency)
     expect(money.money.amount).to eq(sale_price.calculated_price)
   end
-
 end

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Spree::Price do
-
   it 'can build a new sale by factory' do
     price = build(:price)
     sale_price = price.new_sale(15.99)
@@ -9,13 +8,11 @@ describe Spree::Price do
     expect(price.on_sale?).to be false
     expect(price.price).to eql BigDecimal.new(19.99, 4)
 
-    expect(sale_price).to have_attributes({
-      value: BigDecimal.new(15.99, 4),
-      start_at: be_within(1.second).of(Time.now),
-      end_at: nil,
-      enabled: true,
-      calculator: an_instance_of(Spree::Calculator::FixedAmountSalePriceCalculator)
-    })
+    expect(sale_price).to have_attributes(value: BigDecimal.new(15.99, 4),
+                                          start_at: be_within(1.second).of(Time.now),
+                                          end_at: nil,
+                                          enabled: true,
+                                          calculator: an_instance_of(Spree::Calculator::FixedAmountSalePriceCalculator))
   end
 
   it 'can put a price on a fixed sale' do
@@ -29,7 +26,7 @@ describe Spree::Price do
 
   it 'can put a price on a percent-off sale' do
     price = create(:price)
-    price.put_on_sale 0.2, { calculator_type: "Spree::Calculator::PercentOffSalePriceCalculator" }
+    price.put_on_sale 0.2, calculator_type: 'Spree::Calculator::PercentOffSalePriceCalculator'
 
     expect(price.on_sale?).to be true
     expect(price.price).to be_within(0.01).of(15.99)
@@ -54,5 +51,4 @@ describe Spree::Price do
       expect(price.discount_percent.to_f).to be_within(0.1).of(25)
     end
   end
-
 end

@@ -33,5 +33,4 @@ FactoryGirl.define do
       create_list(:international_price, evaluator.prices_count, variant: variant)
     end
   end
-
 end

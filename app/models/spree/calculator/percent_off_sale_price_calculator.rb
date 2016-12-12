@@ -1,8 +1,8 @@
 module Spree
   class Calculator::PercentOffSalePriceCalculator < Spree::Calculator
-    # TODO validate that the sale price is between 0 and 1
+    # TODO: validate that the sale price is between 0 and 1
     def self.description
-      "Calculates the sale price for a Variant by taking off a percentage of the original price"
+      'Calculates the sale price for a Variant by taking off a percentage of the original price'
     end
 
     def compute(sale_price)
