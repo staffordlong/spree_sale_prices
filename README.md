@@ -16,7 +16,7 @@ Installing
 
 In your Gemfile add the following for the latest released version:
 
-    gem 'spree_sale_prices', github: 'renuo/spree-sale-prices', branch: '2.4-stable'
+    gem 'spree_sale_prices', github: 'staffordlong/spree-sale-prices', branch: 'x-x-stable'
 
 Install the Gem:
 
