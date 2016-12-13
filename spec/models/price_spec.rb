@@ -33,6 +33,22 @@ describe Spree::Price do
     expect(price.original_price).to eql(19.99)
   end
 
+  it 'can round down a percent-off sale if required' do
+    price = create(:price)
+    price.put_on_sale 0.28, calculator_type: 'Spree::Calculator::PercentOffSalePriceCalculator', calculator_preferences: { round_number: true }
+
+    expect(price.price).to eql(14.00)
+    expect(price.original_price).to eql(19.99)
+  end
+
+  it 'can round up a percent-off sale if required' do
+    price = create(:price)
+    price.put_on_sale 0.2, calculator_type: 'Spree::Calculator::PercentOffSalePriceCalculator', calculator_preferences: { round_number: true }
+
+    expect(price.price).to eql(16.00)
+    expect(price.original_price).to eql(19.99)
+  end
+
   context 'calculating discount percentage' do
     it 'returns 0 if there\'s no original price' do
       price = create(:price)

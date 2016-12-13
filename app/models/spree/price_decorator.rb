@@ -6,12 +6,13 @@ Spree::Price.class_eval do
   end
 
   def new_sale(value, params = {})
+    calculator_class = params.fetch(:calculator_type, 'Spree::Calculator::FixedAmountSalePriceCalculator').constantize
     sale_price_params = {
       value: value,
       start_at: params.fetch(:start_at, Time.now),
       end_at: params.fetch(:end_at, nil),
       enabled: params.fetch(:enabled, true),
-      calculator: params.fetch(:calculator_type, 'Spree::Calculator::FixedAmountSalePriceCalculator').constantize.new
+      calculator: calculator_class.new(preferences: params[:calculator_preferences] || {})
     }
     sale_prices.new(sale_price_params)
   end
