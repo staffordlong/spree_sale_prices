@@ -10,7 +10,13 @@ module Spree
 
     def compute(sale_price)
       computed_price = (1.0 - sale_price.value.to_f) * sale_price.variant.price_in(sale_price.price.currency).original_price.to_f
-      return preferences[:round_number] ? computed_price.round.to_f : computed_price
+      if preferences[:round_to_nearest_multiple_of] && preferences[:round_to_nearest_multiple_of].integer?
+        (computed_price / preferences[:round_to_nearest_multiple_of]).ceil * preferences[:round_to_nearest_multiple_of]
+      elsif preferences[:round_number]
+        computed_price.round.to_f
+      else
+        computed_price
+      end
     end
 
     private
